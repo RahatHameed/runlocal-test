@@ -21,7 +21,7 @@ projects:
   test:
     repo: RahatHameed/runlocal-test
     workflow: test.yaml
-    branch: master
+    branch: main
     defaults:
       message: "Hello from runlocal!"
       sleep_seconds: "15"
