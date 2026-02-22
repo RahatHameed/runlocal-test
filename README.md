@@ -11,6 +11,7 @@ This repository provides test workflows for the runlocal project. Anyone can use
 | Workflow | Description |
 |----------|-------------|
 | `test.yaml` | Simple test workflow with configurable message and sleep time |
+| `choice-test.yaml` | Workflow with choice inputs to test parameter validation |
 
 ## Usage with runlocal
 
@@ -25,13 +26,32 @@ projects:
     defaults:
       message: "Hello from runlocal!"
       sleep_seconds: "15"
+
+  choice-test:
+    repo: RahatHameed/runlocal-test
+    workflow: choice-test.yaml
+    branch: main
+    defaults:
+      environment: Development
+      database: MySQL8.0
 ```
 
 Then run:
 
 ```bash
+# Basic test workflow
 make workflow-trigger project=test
 make workflow-status project=test
+
+# Choice test - demonstrates parameter validation
+make workflow-trigger project=choice-test param=database="mysql8.0"
+# Output: Warning: Correcting 'mysql8.0' to 'MySQL8.0'
+
+# List available workflows and inputs
+make workflow-list project=choice-test
+
+# Check all projects at once
+make workflow-status-all
 ```
 
 ## Contributing

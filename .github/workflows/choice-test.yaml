@@ -1,0 +1,52 @@
+name: Choice Test
+
+on:
+  workflow_dispatch:
+    inputs:
+      environment:
+        type: choice
+        options:
+          - Development
+          - Staging
+          - Production
+        default: Development
+        description: 'Select deployment environment'
+      database:
+        type: choice
+        options:
+          - MySQL8.0
+          - MySQL8.4
+          - MariaDb11
+        default: MySQL8.0
+        description: 'Select database type'
+      verbose:
+        type: boolean
+        default: false
+        description: 'Enable verbose output'
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Show selected options
+        run: |
+          echo "================================"
+          echo "Selected Configuration"
+          echo "================================"
+          echo "Environment: ${{ inputs.environment }}"
+          echo "Database:    ${{ inputs.database }}"
+          echo "Verbose:     ${{ inputs.verbose }}"
+          echo "================================"
+
+      - name: Simulate deployment
+        run: |
+          echo "Deploying to ${{ inputs.environment }}..."
+          sleep 5
+          echo "Using database: ${{ inputs.database }}"
+          sleep 5
+
+      - name: Done
+        run: echo "Deployment simulation complete!"
